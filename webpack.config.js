@@ -5,7 +5,9 @@ const path = require( "path" );
 module.exports = {
     context: path.join( __dirname, "src" ),
     devtool: debug ? "inline-sourcemap" : false,
-    entry: "./js/App.js",
+    entry: { app: "./js/App.js",
+        lib: [ "react", "react-dom" ],
+    },
     module: {
         rules: [
             {
@@ -33,12 +35,17 @@ module.exports = {
         ],
     },
     output: {
-        path: `${ __dirname }/src/`,
-        filename: "bundle.js",
+        path: path.resolve( __dirname, "dist" ),
+        filename: "[name].bundle.js",
     },
     plugins: debug ? [] : [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin( { mangle: false, sourcemap: false } ),
+        new webpack.optimize.CommonsChunkPlugin( {
+            name: "lib",
+            minChunks: Infinity,
+            filename: "lib.bundle.js",
+        } ),
     ],
 };
