@@ -28,7 +28,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: "babel-loader",
-                /*query: {
+                /* query: {
                     presets: [ "react", "es2015", "stage-0" ],
                 },*/
             },
@@ -45,7 +45,7 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin( {
             name: "lib",
             minChunks: Infinity,
-            filename: "lib.bundle.js",
+            filename: "[name].bundle.js",
         } ),
     ],
 };
